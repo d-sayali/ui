@@ -293,11 +293,7 @@
               </form>
               <div class="row-msg">
                 <table class="duty-details" id="dutyDetails">
-                  <tr>
-                    <th>Duty Details</th>
-                    <th>Duty Rate</th>
-                    <th>Duty Amount</th>
-                  </tr>
+                  
                 </table>
               </div>
               <div class="row-msg">
@@ -404,14 +400,14 @@
 
               if (fieldName != "formsubmit") { params[fieldName] = countryMapping[fieldValue] || fieldValue; }
             }
-
+            console.log("---params --- ", params);
             var exwValue = cifValue = fobValue = 0;
             var originCharges = parseInt(params.originCharges) || 0,
               exwInsuranceCharges = parseInt(params.exwInsuranceCharges) || 0,
               cifInsuranceCharges = parseInt(params.cifInsuranceCharges) || 0,
               fobInsuranceCharges = parseInt(params.fobInsuranceCharges) || 0,
 
-              exwfIntFreight = parseInt(params.exwIntFreight) || 0,
+              exwIntFreight = parseInt(params.exwIntFreight) || 0,
               cifIntFreight = parseInt(params.cifIntFreight) || 0,
               fobIntFreight = parseInt(params.fobIntFreight) || 0,
 
@@ -419,11 +415,14 @@
               originFreight = parseInt(params.originFreight) || 0,
               productVal = parseInt(params.productValue) || 0;
 
+              console.log("values---- ", originCharges, originFreight, exwIntFreight, exwInsuranceCharges);
+
             switch (params['inco_term']) {
               case 'EXW':
                 exwValue = productVal;
                 fobValue = exwValue + originCharges + originFreight;
                 cifValue = fobValue + exwIntFreight + exwInsuranceCharges;
+                console.log("-----ex = ", exwValue, "  fob= ", fobValue, "  cif= ", cifValue);
                 break;
               case 'CIF':
                 cifValue = productVal;
@@ -445,8 +444,8 @@
               hscode: params.hscode,
               import_country: params.import_country,
               export_country: params.export_country,
-              CIFVALUE: 10000,
-              FOBVALUE: 5000,
+              CIFVALUE: params["CIFVALUE"],
+              FOBVALUE: params["FOBVALUE"],
             };
             const other_params = {
               headers: {
@@ -484,10 +483,13 @@
                 const showDutyDetails = document.getElementById("dutyDetails");
                 const showSummary = document.getElementById("summary");
 
+                showDutyDetails.innerHTML =  "";
                 importCountry = inputData.import_country;
                 exportCountry = inputData.export_country;
                 const dutyDetailsDesc = data && data.dutyDetails || [];
                 if (dutyDetailsDesc.length > 0) {
+                  var line="<tr><th>Duty Details</th><th>Duty Rate</th><th>Duty Amount</th></tr>";
+                  showDutyDetails.innerHTML = line;
                   dutyDetailsDesc.forEach(ele => {
                     var getKey = Object.keys(ele).filter(e => e.match(/(_dd)$/))[0];
                     var prefix = getKey.split("_dd")[0];
