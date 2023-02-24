@@ -136,12 +136,34 @@
                     <select class="form-control form-control-lg" id="import_country">
                       <option>Select Country</option>
                       <option>Afganistan</option>
+                      <option>Albania</option>
+                      <option>Algeria</option>
+                      <option>Argentina</option>
+                      <option>Australia</option>
+                      <option>Austria</option>
+                      <option>Bangladesh</option>
                       <option>Belgium</option>
+                      <option>Bermuda</option>
+                      <option>Bhutan</option>
+                      <option>Brazil</option>
+                      <option>Canada</option>
+                      <option>Chile</option>
+                      <option>China</option>
+                      <option>France</option>
+                      <option>Georgia</option>
                       <option>Germany</option>
                       <option>India</option>
+                      <option>Iraq</option>
+                      <option>Iran</option>
                       <option>Ireland</option>
+                      <option>Israel</option>
+                      <option>Italy</option>
+                      <option>Japan</option>
+                      <option>Kuwait</option>
                       <option>Nigeria</option>
                       <option>Pakistan</option>
+                      <option>Sri Lanka</option>
+                      <option>United Kingdom</option>
                       <option>United States of America</option>
                     </select>
                   </div>
@@ -151,14 +173,36 @@
                   <div class="btn-group col-sm-6">
                     <select class="form-control form-control-lg" id="export_country">
                       <option>Select Country</option>
-                      <option>Afganistan</option>
-                      <option>Belgium</option>
-                      <option>Germany</option>
-                      <option>India</option>
-                      <option>Ireland</option>
-                      <option>Nigeria</option>
-                      <option>Pakistan</option>
-                      <option>United States of America</option>
+                      <option>Afganistan</option> 
+                      <option>Albania</option> 
+                      <option>Algeria</option> 
+                      <option>Argentina</option> 
+                      <option>Australia</option> 
+                      <option>Austria</option> 
+                      <option>Bangladesh</option> 
+                      <option>Belgium</option> 
+                      <option>Bermuda</option> 
+                      <option>Bhutan</option> 
+                      <option>Brazil</option> 
+                      <option>Canada</option> 
+                      <option>Chile</option> 
+                      <option>China</option> 
+                      <option>France</option> 
+                      <option>Georgia</option> 
+                      <option>Germany</option> 
+                      <option>India</option> 
+                      <option>Iraq</option> 
+                      <option>Iran</option> 
+                      <option>Ireland</option> 
+                      <option>Israel</option> 
+                      <option>Italy</option> 
+                      <option>Japan</option> 
+                      <option>Kuwait</option> 
+                      <option>Nigeria</option> 
+                      <option>Pakistan</option> 
+                      <option>Sri Lanka</option> 
+                      <option>United Kingdom</option> 
+                      <option>United States of America</option> 
                     </select>
                   </div>
                 </div>
@@ -254,25 +298,6 @@
                     <th>Duty Rate</th>
                     <th>Duty Amount</th>
                   </tr>
-                  <tr>
-                    <td>MFN Tariff</td>
-                    <td id="mfnVal"></td>
-                    <td id="mfnCalculated"></td>
-                  </tr>
-                  <tr>
-                    <td>Import Consumption Tax</td>
-                    <td id="ictVal"></td>
-                    <td id="ictCalculated"></td>
-                  </tr>
-                  <tr>
-                    <td>Value Added Tax</td>
-                    <td id="vatVal"></td>
-                    <td id="vatCalculated"></td>
-                  </tr>
-                  <tr>
-                    <td colspan="2">Total Duty</td>
-                    <td id="totalDuty"></td>
-                  </tr>
                 </table>
               </div>
               <div class="row-msg">
@@ -296,7 +321,6 @@
         </div>
 
         <script>
-
           const el = document.getElementById('inco_term');
           const exw = document.getElementById('exw-select');
           const cif = document.getElementById('cif-select');
@@ -339,27 +363,37 @@
             const totalDutySummary = document.getElementById('total_duty_summary');
             const totalCostSummary = document.getElementById('total_cost_summary');
 
-
-            //table data
-            const mfnVal = document.getElementById('mfnVal');
-            const mfnCalculated = document.getElementById('mfnCalculated');
-            const ictVal = document.getElementById('ictVal');
-            const ictCalculated = document.getElementById('ictCalculated');
-            const vatVal = document.getElementById('vatVal');
-            const vatCalculated = document.getElementById('vatCalculated');
-            const totalDuty = document.getElementById('totalDuty');
-
-
             var countryMapping = {
               "Afganistan": "afg",
+              "Albania": "alb",
+              "Algeria": "dza",
+              "Argentina": "arg",
+              "Australia": "aus",
+              "Austria": "aut",
+              "Bangladesh": "bgd",
               "Belgium": "bel",
+              "Bermuda": "bmu",
+              "Bhutan": "btn",
+              "Brazil": "bra",
+              "Canada": "can",
+              "Chile": "chl",
+              "China": "chn",
+              "France": "fra",
+              "Georgia": "geo",
               "Germany": "deu",
               "India": "ind",
+              "Iraq": "irn",
+              "Iran": "irq",
               "Ireland": "irl",
+              "Israel": "isr",
+              "Italy": "ita",
+              "Japan": "jpn",
+              "Kuwait": "kwt",
               "Nigeria": "nga",
               "Pakistan": "pak",
+              "Sri Lanka": "lka",
               "United Kingdom": "gbr",
-              "United States of America": "usa"
+              "United States of America": "usa",
             }
 
             var params = {};
@@ -442,8 +476,8 @@
                 }
               }).then(function (data) {
                 var string = "<div>"
-                var total = data[0].total + data[0].CIFVALUE;
-                string += "<h3>Landed cost: " + total + " " + data[0].cyn + "</h3></div>";
+                var total = data.total + data.CIFVALUE;
+                string += "<h3>Landed cost: " + total + " " + data.cyn + "</h3></div>";
                 string += "<div class='row'> <div class='tnc-note'><i>*Excluding destination freight, destination charges and intermediaries margin (importer, wholesaler, etc.) </i></div> </div>"
 
                 document.getElementById("message").innerHTML = string;
@@ -452,26 +486,26 @@
 
                 importCountry = inputData.import_country;
                 exportCountry = inputData.export_country;
-                var parseKeys = importCountry + "_";
-                mfnVal.innerHTML = data[0][importCountry + "_mfn1_d"] ? data[0][importCountry + "_mfn1_d"] : data[0][importCountry + "_mfn2_d"] ? data[0][importCountry + "_mfn1_d"] : 0;
-                mfnCalculated.innerHTML = data[0][importCountry + "_mfn1_cl"] ? data[0][importCountry + "_mfn1_cl"] : data[0][importCountry + "_mfn2_cl"] ? data[0][importCountry + "_mfn1_cl"] : 0;
-                ictVal.innerHTML = data[0][importCountry + "_ict_d"] ? data[0][importCountry + "_ict_d"] : 0;
-                ictCalculated.innerHTML = data[0][importCountry + "_ict_cl"] ? data[0][importCountry + "_ict_cl"] : 0;
-                vatVal.innerHTML = data[0][importCountry + "_vat_d"] ? data[0][importCountry + "_vat_d"] : 0;
-                vatCalculated.innerHTML = data[0][importCountry + "_vat_cl"] ? data[0][importCountry + "_vat_cl"] : 0;
-                var totalFormula = (data[0].total_formulae3.split("("))[1].split(")")[0].split("+").slice(1,).map(Number);
-                const totalDutyValue = totalFormula ? totalFormula.reduce((a, b) => a + b, 0) : 0;
-                totalDuty.innerHTML = totalDutyValue;
+                const dutyDetailsDesc = data && data.dutyDetails || [];
+                if (dutyDetailsDesc.length > 0) {
+                  dutyDetailsDesc.forEach(ele => {
+                    var getKey = Object.keys(ele).filter(e => e.match(/(_dd)$/))[0];
+                    var prefix = getKey.split("_dd")[0];
+                    var entry = `<tr><td>${ele[`${prefix}_dd`]}</td>`;
+                    entry += `<td>${ele[`${prefix}_d`]}</td>`;
+                    entry += `<td>${ele[`${prefix}_cl`]}</td>`;
+                    showDutyDetails.innerHTML += entry;
+                  })
+                  showDutyDetails.innerHTML += `<tr><td colspan="2">Total Duty</td> <td> ${data.total} </td></tr>`;
+                }
 
-
-
-                importCountrySummary.innerHTML = getKeyByValue(countryMapping,importCountry);
-                exportCountrySummary.innerHTML = getKeyByValue(countryMapping,export_country);
-                hscodeSummary.innerHTML = data[0].hs || data[0].hscode;
-                hscodeDescSummary.innerHTML = data[0].des || "";
-                cifValSummary.innerHTML = data[0].CIFVALUE || inputData.CIFVALUE;
-                totalDutySummary.innerHTML = totalDutyValue;
-                totalCostSummary.innerHTML = total + " " + data[0].cyn;
+                importCountrySummary.innerHTML = getKeyByValue(countryMapping, importCountry);
+                exportCountrySummary.innerHTML = getKeyByValue(countryMapping, exportCountry);
+                hscodeSummary.innerHTML = data.hs || data.hscode;
+                hscodeDescSummary.innerHTML = data.des || "";
+                cifValSummary.innerHTML = data.CIFVALUE || inputData.CIFVALUE;
+                totalDutySummary.innerHTML = data.total;
+                totalCostSummary.innerHTML = total + " " + data.cyn;
 
 
                 showDutyDetails.style.visibility = showSummary.style.visibility = "visible";
