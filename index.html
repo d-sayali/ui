@@ -75,7 +75,7 @@
           <div class="collapse" id="ui-basic">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"> <a class="nav-link" href="#">Import Duty Calculator</a></li>
-              <li class="nav-item"> <a class="nav-link" href="#">Save Import Duty</a></li>
+              <li class="nav-item"> <a class="nav-link" href="fta.html">Save Import Duty</a></li>
               <li class="nav-item"> <a class="nav-link" href="#">Best Market to Import</a></li>
             </ul>
           </div>
@@ -173,36 +173,36 @@
                   <div class="btn-group col-sm-6">
                     <select class="form-control form-control-lg" id="export_country">
                       <option>Select Country</option>
-                      <option>Afganistan</option> 
-                      <option>Albania</option> 
-                      <option>Algeria</option> 
-                      <option>Argentina</option> 
-                      <option>Australia</option> 
-                      <option>Austria</option> 
-                      <option>Bangladesh</option> 
-                      <option>Belgium</option> 
-                      <option>Bermuda</option> 
-                      <option>Bhutan</option> 
-                      <option>Brazil</option> 
-                      <option>Canada</option> 
-                      <option>Chile</option> 
-                      <option>China</option> 
-                      <option>France</option> 
-                      <option>Georgia</option> 
-                      <option>Germany</option> 
-                      <option>India</option> 
-                      <option>Iraq</option> 
-                      <option>Iran</option> 
-                      <option>Ireland</option> 
-                      <option>Israel</option> 
-                      <option>Italy</option> 
-                      <option>Japan</option> 
-                      <option>Kuwait</option> 
-                      <option>Nigeria</option> 
-                      <option>Pakistan</option> 
-                      <option>Sri Lanka</option> 
-                      <option>United Kingdom</option> 
-                      <option>United States of America</option> 
+                      <option>Afganistan</option>
+                      <option>Albania</option>
+                      <option>Algeria</option>
+                      <option>Argentina</option>
+                      <option>Australia</option>
+                      <option>Austria</option>
+                      <option>Bangladesh</option>
+                      <option>Belgium</option>
+                      <option>Bermuda</option>
+                      <option>Bhutan</option>
+                      <option>Brazil</option>
+                      <option>Canada</option>
+                      <option>Chile</option>
+                      <option>China</option>
+                      <option>France</option>
+                      <option>Georgia</option>
+                      <option>Germany</option>
+                      <option>India</option>
+                      <option>Iraq</option>
+                      <option>Iran</option>
+                      <option>Ireland</option>
+                      <option>Israel</option>
+                      <option>Italy</option>
+                      <option>Japan</option>
+                      <option>Kuwait</option>
+                      <option>Nigeria</option>
+                      <option>Pakistan</option>
+                      <option>Sri Lanka</option>
+                      <option>United Kingdom</option>
+                      <option>United States of America</option>
                     </select>
                   </div>
                 </div>
@@ -293,7 +293,7 @@
               </form>
               <div class="row-msg">
                 <table class="duty-details" id="dutyDetails">
-                  
+
                 </table>
               </div>
               <div class="row-msg">
@@ -415,14 +415,12 @@
               originFreight = parseInt(params.originFreight) || 0,
               productVal = parseInt(params.productValue) || 0;
 
-              console.log("values---- ", originCharges, originFreight, exwIntFreight, exwInsuranceCharges);
 
             switch (params['inco_term']) {
               case 'EXW':
                 exwValue = productVal;
                 fobValue = exwValue + originCharges + originFreight;
                 cifValue = fobValue + exwIntFreight + exwInsuranceCharges;
-                console.log("-----ex = ", exwValue, "  fob= ", fobValue, "  cif= ", cifValue);
                 break;
               case 'CIF':
                 cifValue = productVal;
@@ -483,12 +481,12 @@
                 const showDutyDetails = document.getElementById("dutyDetails");
                 const showSummary = document.getElementById("summary");
 
-                showDutyDetails.innerHTML =  "";
-                importCountry = inputData.import_country;
-                exportCountry = inputData.export_country;
+                showDutyDetails.innerHTML = "";
+                let importCountry = inputData.import_country,
+                  exportCountry = inputData.export_country;
                 const dutyDetailsDesc = data && data.dutyDetails || [];
                 if (dutyDetailsDesc.length > 0) {
-                  var line="<tr><th>Duty Details</th><th>Duty Rate</th><th>Duty Amount</th></tr>";
+                  var line = "<tr><th>Duty Details</th><th>Duty Rate</th><th>Duty Amount</th></tr>";
                   showDutyDetails.innerHTML = line;
                   dutyDetailsDesc.forEach(ele => {
                     var getKey = Object.keys(ele).filter(e => e.match(/(_dd)$/))[0];

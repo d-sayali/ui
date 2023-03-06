@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>SEM</title>
+    <!-- base:css -->
+    <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="images/favicon.png" />
+
+    <style>
+        #exw-select,
+        #cif-select,
+        #fob-select,
+        #summary,
+        .display-result {
+            visibility: hidden;
+            display: none;
+            color: black;
+        }
+
+        .tnc-note {
+            font-size: 12px;
+            color: grey;
+            padding: 10px;
+            font-weight: normal;
+        }
+
+        .duty-details,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        .duty-details {
+            margin: 20px auto;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container-scroller d-flex">
+        <!-- partial:./partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+            <ul class="nav">
+                <li class="nav-item sidebar-category">
+                    <p>Dashboard</p>
+                </li>
+                <li class="nav-item nav-item-start">
+                    <a class="nav-link" href="#">
+                        <span class="menu-title">HS Code Finder</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <span class="menu-title">Export Price Calculator</span>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                        aria-controls="ui-basic">
+                        <span class="menu-title">Importers</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" id="ui-basic">
+                        <ul class="nav flex-column sub-menu">
+                            <li class="nav-item"> <a class="nav-link" href="#">Import Duty Calculator</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="fta.html">Save Import Duty</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="#">Best Market to Import</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+            </ul>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:./partials/_navbar.html -->
+            <nav class="navbar col-lg-12 col-12 px-0 py-0 py-lg-4 d-flex flex-row">
+                <div class="navbar-menu-wrapper d-flex align-items-center">
+                    <button class="navbar-toggler navbar-toggler align-self-center" type="button"
+                        data-toggle="minimize">
+                        <span class="mdi mdi-menu"></span>
+                    </button>
+                    <div class="navbar-brand-wrapper">
+                        <a class="navbar-brand brand-logo" href="index.html"><i
+                                class="mdi mdi-apple-keyboard-command"></i></a>
+                        <a class="navbar-brand brand-logo-mini" href="index.html"><i
+                                class="mdi mdi-apple-keyboard-command"></i></a>
+                    </div>
+                </div>
+                <div class="navbar-menu-wrapper navbar-search-wrapper d-none d-lg-flex align-items-center">
+
+
+                    <input type="text" class="form-control" placeholder="Enter product name or HS code here..."
+                        aria-label="search" aria-describedby="search">
+
+                </div>
+            </nav>
+            <!-- partial -->
+
+            <!-- Duty calculator form -->
+            <div>
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <form class="forms-sample" onsubmit="return getDuty()" id="myForm">
+                                <div class="form-group row">
+                                    <label for="tradeFlow" class="col-sm-6 col-form-label">Select Trade Flow</label>
+                                    <div class="btn-group col-sm-6">
+                                        <select class="form-control form-control-lg" id="tradeFlow">
+                                            <option>Importer or Exporter</option>
+                                            <option>Importer</option>
+                                            <option>Exporter</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="hscode" class="col-sm-6 col-form-label">HS code</label>
+                                    <div class="btn-group col-sm-6">
+                                        <input type="text" class="form-control form-control-lg" id="hscode"
+                                            placeholder="Enter HS Code here" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="import_country" class="col-sm-6 col-form-label">Select Import
+                                        Country</label>
+                                    <div class="btn-group col-sm-6">
+                                        <select class="form-control form-control-lg" id="import_country">
+                                            <option>Select Country</option>
+                                            <option>Afganistan</option>
+                                            <option>Albania</option>
+                                            <option>Algeria</option>
+                                            <option>Argentina</option>
+                                            <option>Australia</option>
+                                            <option>Austria</option>
+                                            <option>Bangladesh</option>
+                                            <option>Belgium</option>
+                                            <option>Bermuda</option>
+                                            <option>Bhutan</option>
+                                            <option>Brazil</option>
+                                            <option>Canada</option>
+                                            <option>Chile</option>
+                                            <option>China</option>
+                                            <option>France</option>
+                                            <option>Georgia</option>
+                                            <option>Germany</option>
+                                            <option>India</option>
+                                            <option>Iraq</option>
+                                            <option>Iran</option>
+                                            <option>Ireland</option>
+                                            <option>Israel</option>
+                                            <option>Italy</option>
+                                            <option>Japan</option>
+                                            <option>Kuwait</option>
+                                            <option>Nigeria</option>
+                                            <option>Pakistan</option>
+                                            <option>Sri Lanka</option>
+                                            <option>United Kingdom</option>
+                                            <option>United States of America</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="export_country" class="col-sm-6 col-form-label">Select Export
+                                        Country</label>
+                                    <div class="btn-group col-sm-6">
+                                        <select class="form-control form-control-lg" id="export_country">
+                                            <option>Select Country</option>
+                                            <option>Afganistan</option>
+                                            <option>Albania</option>
+                                            <option>Algeria</option>
+                                            <option>Argentina</option>
+                                            <option>Australia</option>
+                                            <option>Austria</option>
+                                            <option>Bangladesh</option>
+                                            <option>Belgium</option>
+                                            <option>Bermuda</option>
+                                            <option>Bhutan</option>
+                                            <option>Brazil</option>
+                                            <option>Canada</option>
+                                            <option>Chile</option>
+                                            <option>China</option>
+                                            <option>France</option>
+                                            <option>Georgia</option>
+                                            <option>Germany</option>
+                                            <option>India</option>
+                                            <option>Iraq</option>
+                                            <option>Iran</option>
+                                            <option>Ireland</option>
+                                            <option>Israel</option>
+                                            <option>Italy</option>
+                                            <option>Japan</option>
+                                            <option>Kuwait</option>
+                                            <option>Nigeria</option>
+                                            <option>Pakistan</option>
+                                            <option>Sri Lanka</option>
+                                            <option>United Kingdom</option>
+                                            <option>United States of America</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inco_term" class="col-sm-6 col-form-label">INCO Term</label>
+                                    <div class="btn-group col-sm-6">
+                                        <select class="form-control form-control-lg" id="inco_term">
+                                            <option>Select EXW/CIF/FOB</option>
+                                            <option>EXW</option>
+                                            <option>CIF</option>
+                                            <option>FOB</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="exw-select" class="">
+                                    <div class="form-group row">
+                                        <label for="originCharges" class="col-sm-6 col-form-label">Origin
+                                            Charges</label>
+                                        <div class="btn-group col-sm-6">
+                                            <input type="number" class="form-control form-control-lg" id="originCharges"
+                                                placeholder="Numbers only" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="originFreight" class="col-sm-6 col-form-label">Origin
+                                            Freight</label>
+                                        <div class="btn-group col-sm-6">
+                                            <input type="number" class="form-control form-control-lg" id="originFreight"
+                                                placeholder="Numbers only" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="exwIntFreight" class="col-sm-6 col-form-label">International
+                                            Freight</label>
+                                        <div class="btn-group col-sm-6">
+                                            <input type="number" class="form-control form-control-lg" id="exwIntFreight"
+                                                placeholder="Numbers only" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="exwInsuranceCharges" class="col-sm-6 col-form-label">Insurance
+                                            Charges</label>
+                                        <div class="btn-group col-sm-6">
+                                            <input type="number" class="form-control form-control-lg"
+                                                id="exwInsuranceCharges" placeholder="Numbers only" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="cif-select" class="">
+                                    <div class="form-group row">
+                                        <label for="cifIntFreight" class="col-sm-6 col-form-label">International
+                                            Freight</label>
+                                        <div class="btn-group col-sm-6">
+                                            <input type="number" class="form-control form-control-lg" id="cifIntFreight"
+                                                placeholder="Numbers only" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="cifInsuranceCharges" class="col-sm-6 col-form-label">Insurance
+                                            Charges</label>
+                                        <div class="btn-group col-sm-6">
+                                            <input type="number" class="form-control form-control-lg"
+                                                id="cifInsuranceCharges" placeholder="Numbers only" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="fob-select" class="">
+                                    <div class="form-group row">
+                                        <label for="fobIntFreight" class="col-sm-6 col-form-label">International
+                                            Freight</label>
+                                        <div class="btn-group col-sm-6">
+                                            <input type="number" class="form-control form-control-lg" id="fobIntFreight"
+                                                placeholder="Numbers only" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="fobInsuranceCharges" class="col-sm-6 col-form-label">Insurance
+                                            Charges</label>
+                                        <div class="btn-group col-sm-6">
+                                            <input type="number" class="form-control form-control-lg"
+                                                id="fobInsuranceCharges" placeholder="Numbers only" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="productValue" class="col-sm-6 col-form-label">Value of Products</label>
+                                    <div class="btn-group col-sm-6">
+                                        <input type="number" class="form-control form-control-lg" id="productValue"
+                                            placeholder="Numbers only" />
+                                    </div>
+                                </div>
+                                <button id="formsubmit" type="button"
+                                    class="btn btn-outline-primary btn-icon-text btn-center-align">
+                                    <i class="mdi mdi-file-check btn-icon-prepend" onclick="getDuty(event)"></i>
+                                    Calculate duty
+                                </button>
+                            </form>
+                            <div class="row-msg">
+                                <div id="dutyDetails"></div>
+                            </div>
+                           
+                            <div class="shipment-summary" id="summary">
+                                <div class="">
+                                    <h3>YOUR SHIPMENT SUMMARY</h3>
+                                    <div>Import Country: <span id="import_name_summary"></span></div>
+                                    <div>Export Country: <span id="export_name_summary"></span></div>
+                                    <div> Mode of Transport: All</div>
+                                    <div>Import HS Code: <span id="hscode_val_summary"></span></div>
+                                    <div> CIF Value: <span id="cif_val_summary"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+                    const el = document.getElementById('inco_term');
+                    const exw = document.getElementById('exw-select');
+                    const cif = document.getElementById('cif-select');
+                    const fob = document.getElementById('fob-select');
+
+                    el.addEventListener('change', function handleChange(event) {
+                        if (event.target.value === 'EXW') {
+                            exw.style.visibility = 'visible';
+                            exw.style.display = 'inline-block';
+                            cif.style.visibility = fob.style.visibility = 'hidden';
+                            cif.style.display = fob.style.display = 'none';
+                        } else if (event.target.value === 'CIF') {
+                            cif.style.visibility = 'visible';
+                            cif.style.display = 'inline-block';
+                            exw.style.visibility = fob.style.visibility = 'hidden';
+                            exw.style.display = fob.style.display = 'none';
+                        } else if (event.target.value === 'FOB') {
+                            fob.style.visibility = 'visible';
+                            fob.style.display = 'inline-block';
+                            cif.style.visibility = exw.style.visibility = 'hidden';
+                            cif.style.display = exw.style.display = 'none';
+                        }
+                        else {
+                            fob.style.visibility = cif.style.visibility = exw.style.visibility = 'hidden';
+                            fob.style.display = cif.style.display = exw.style.display = 'none';
+                        }
+                    });
+
+                    let response = {};
+                    async function getDuty(event) {
+                        event.preventDefault();
+                        const showDutyDetails = document.getElementById("dutyDetails");
+                        showDutyDetails.innerHTML = "checking";
+                        //summary block
+                        const importCountrySummary = document.getElementById('import_name_summary');
+                        const exportCountrySummary = document.getElementById('export_name_summary');
+                        const hscodeSummary = document.getElementById('hscode_val_summary');
+                        const hscodeDescSummary = document.getElementById('hscode_desc_summary');
+                        const cifValSummary = document.getElementById('cif_val_summary');
+                        const totalDutySummary = document.getElementById('total_duty_summary');
+                        const totalCostSummary = document.getElementById('total_cost_summary');
+
+                        var countryMapping = {
+                            "Afganistan": "afg",
+                            "Albania": "alb",
+                            "Algeria": "dza",
+                            "Argentina": "arg",
+                            "Australia": "aus",
+                            "Austria": "aut",
+                            "Bangladesh": "bgd",
+                            "Belgium": "bel",
+                            "Bermuda": "bmu",
+                            "Bhutan": "btn",
+                            "Brazil": "bra",
+                            "Canada": "can",
+                            "Chile": "chl",
+                            "China": "chn",
+                            "France": "fra",
+                            "Georgia": "geo",
+                            "Germany": "deu",
+                            "India": "ind",
+                            "Iraq": "irn",
+                            "Iran": "irq",
+                            "Ireland": "irl",
+                            "Israel": "isr",
+                            "Italy": "ita",
+                            "Japan": "jpn",
+                            "Kuwait": "kwt",
+                            "Nigeria": "nga",
+                            "Pakistan": "pak",
+                            "Sri Lanka": "lka",
+                            "United Kingdom": "gbr",
+                            "United States of America": "usa",
+                        }
+
+                        var params = {};
+                        var y = document.getElementById("myForm");
+                        for (var i = 0; i < y.elements.length; i++) {
+                            var fieldName = y.elements[i].id;
+                            var fieldValue = y.elements[i].value;
+
+                            if (fieldName != "formsubmit") { params[fieldName] = countryMapping[fieldValue] || fieldValue; }
+                        }
+                        console.log("---params --- ", params);
+                        var exwValue = cifValue = fobValue = 0;
+                        var originCharges = parseInt(params.originCharges) || 0,
+                            exwInsuranceCharges = parseInt(params.exwInsuranceCharges) || 0,
+                            cifInsuranceCharges = parseInt(params.cifInsuranceCharges) || 0,
+                            fobInsuranceCharges = parseInt(params.fobInsuranceCharges) || 0,
+
+                            exwIntFreight = parseInt(params.exwIntFreight) || 0,
+                            cifIntFreight = parseInt(params.cifIntFreight) || 0,
+                            fobIntFreight = parseInt(params.fobIntFreight) || 0,
+
+
+                            originFreight = parseInt(params.originFreight) || 0,
+                            productVal = parseInt(params.productValue) || 0;
+
+
+                        switch (params['inco_term']) {
+                            case 'EXW':
+                                exwValue = productVal;
+                                fobValue = exwValue + originCharges + originFreight;
+                                cifValue = fobValue + exwIntFreight + exwInsuranceCharges;
+                                break;
+                            case 'CIF':
+                                cifValue = productVal;
+                                fobValue = cifValue - (cifIntFreight + cifInsuranceCharges);
+                                exwValue = cifValue - (originCharges + originFreight + cifIntFreight + cifInsuranceCharges);
+                                break;
+                            case 'FOB':
+                                fobValue = productVal;
+                                cifValue = fobValue + (fobIntFreight + fobInsuranceCharges);
+                                exwValue = fobValue - (fobIntFreight + fobInsuranceCharges);
+                        }
+
+                        params["CIFVALUE"] = cifValue;
+                        params["FOBVALUE"] = fobValue;
+
+
+                        const url = "https://dutycalculator.cyclic.app/api/dutyCalculator/getFTA";
+                        const inputData = {
+                            hscode: params.hscode,
+                            import_country: params.import_country,
+                            export_country: params.export_country,
+                            CIFVALUE: params["CIFVALUE"],
+                            FOBVALUE: params["FOBVALUE"],
+                        };
+                        const other_params = {
+                            headers: {
+                                "Content-type": "application/json",
+                                "Access-Control-Allow-Origin": "*",
+                                "Origin": "localhost:3000",
+                                "Authorization": "Bearer EAALlsF27TkEBAPFq6ow61SOkPt3Gg1LqAlkKtoZCsFPP3q3KkOgmXqiDpDyyeMAwxJbTB3k56bkliVcXvXjoZC0GcIMpIEXDjgDf3UGgT4USdVPu1SbVQMHJbssuvjZA5mLhJemWfnttFXRtfuUv5PiaZAeZAB7ZBWql4JCZBAhE71QalEqi78vUFZA5ILIFfv0vAbXFmAM8TkdaKsvvOqCzcZAlUYqXj4T0ZD",
+                                "x-access-token": "EAALlsF27TkEBAPFq6ow61SOkPt3Gg1LqAlkKtoZCsFPP3q3KkOgmXqiDpDyyeMAwxJbTB3k56bkliVcXvXjoZC0GcIMpIEXDjgDf3UGgT4USdVPu1SbVQMHJbssuvjZA5mLhJemWfnttFXRtfuUv5PiaZAeZAB7ZBWql4JCZBAhE71QalEqi78vUFZA5ILIFfv0vAbXFmAM8TkdaKsvvOqCzcZAlUYqXj4T0ZD"
+                            },
+                            body: JSON.stringify(inputData),
+                            method: "POST",
+                        };
+
+                        console.log("API request ==> ", url, " \n ", other_params);
+
+                        function getKeyByValue(object, value) {
+                            return Object.keys(object).find(key => object[key] === value);
+                        }
+
+
+                        fetch(url, other_params)
+                            .then(function (response) {
+                                if (response.ok) {
+                                    return response.json();
+                                } else {
+                                    throw new Error("Could not reach the API: " + response.statusText);
+                                }
+                            }).then(function (data) {
+
+                                const showSummary = document.getElementById("summary");
+                                showDutyDetails.innerHTML = " ";
+                                let entry="";
+
+                                let importCountry = inputData.import_country,
+                                    exportCountry = inputData.export_country;
+                                data && data.length && data.forEach(duty => {
+                                    var dutyDetailsDesc = duty && duty[0] && duty[0].dutyDetails || []
+                                    if (dutyDetailsDesc.length > 0) {
+                                        var line = "<table class='duty-details'><tr><th>Duty Details</th><th>Duty Rate</th><th>Duty Amount</th></tr>";
+
+                                        dutyDetailsDesc.forEach(ele => {
+                                            var getKey = Object.keys(ele).filter(e => e.match(/(_dd)$/))[0];
+                                            var prefix = getKey.split("_dd")[0];
+                                            var _dd = ele[`${prefix}_dd`] || 0,
+                                                _d = ele[`${prefix}_d`] || 0,
+                                                _cl = ele[`${prefix}_cl`] || 0;
+                                            entry += `<tr><td>${_dd}</td>`;
+                                            entry += `<td>${_d}</td>`;
+                                            entry += `<td>${_cl}</td>`;
+                                        });
+                                        showDutyDetails.innerHTML += line + entry + `<tr><td colspan="2">Total Duty</td> <td> ${duty[0].total} </td></tr></table>`;
+                                    }
+
+                                    var string = "<div>";
+                                    var total = duty[0].total + duty[0].CIFVALUE;
+                                    string += "<h3>Landed cost: " + total + " " + duty[0].cyn + "</h3></div>";
+                                    string += "<div class='row'> <div class='tnc-note'><i>*Excluding destination freight, destination charges and intermediaries margin (importer, wholesaler, etc.) </i></div>"
+                                    showDutyDetails.innerHTML += string;
+
+                                    // showDutyDetails.style.visibility = "visible";
+                                    // showDutyDetails.style.display = 'inline-block';
+
+                                });
+                                importCountrySummary.innerHTML = getKeyByValue(countryMapping, importCountry);
+                                exportCountrySummary.innerHTML = getKeyByValue(countryMapping, exportCountry);
+                                hscodeSummary.innerHTML = inputData.hscode;
+                                cifValSummary.innerHTML = inputData.CIFVALUE;
+
+                                showSummary.style.visibility = "visible";
+                                showSummary.style.display = 'inline-block';
+                            }).catch(function (error) {
+                                showDutyDetails.innerHTML = error;
+                            });
+                        return true;
+                    }
+
+                    document.getElementById("formsubmit").onclick = function () { getDuty(event) };
+
+
+                </script>
+
+
+
+            </div>
+            <!-- Duty calculator form ends -->
+
+
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+
+    <script src="vendors/js/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <script src="vendors/chart.js/Chart.min.js"></script>
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="js/off-canvas.js"></script>
+    <script src="js/hoverable-collapse.js"></script>
+    <script src="js/template.js"></script>
+    <!-- endinject -->
+    <!-- plugin js for this page -->
+    <!-- End plugin js for this page -->
+    <!-- Custom js for this page-->
+    <script src="js/dashboard.js"></script>
+    <!-- End custom js for this page-->
+</body>
+
+</html>
